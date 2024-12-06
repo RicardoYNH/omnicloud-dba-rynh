@@ -3,7 +3,7 @@
 import psycopg2
 from pymongo import MongoClient
 import docker
-import os, datetime, subprocess, uuid
+import os, datetime, subprocess, uuid, threading
 
 def extract_postgres_data():
     # Conexion
@@ -108,9 +108,13 @@ def dump_mongodb():
     except docker.errors.DockerException as e:
         print(f"Error al crear el dump de MongoDB: {e}")
 
+def target():
+    dump_mongodb()
 
 if __name__ == '__main__':
     # Primero respaldos, despues procesamiento
     dump_postgres()
-    dump_mongodb()
+    thread = threading.Thread(target=target)
+    thread.start()
+    thread.join(timeout=10)
     etl_process()
