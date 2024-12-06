@@ -168,12 +168,12 @@ Se ha implementado el uso de **Apache Kafka** y **Elasticsearch** para manejar y
 En el archivo `docker-compose.yml`, ZooKeeper se configura de la siguiente manera:
 ```yaml
 zookeeper:
-	image:  bitnami/zookeeper:latest
-	container_name:  zookeeper
-	ports:
-		-  "2181:2181"
-	environment:
-		-  ALLOW_ANONYMOUS_LOGIN=yes
+  image:  bitnami/zookeeper:latest
+  container_name:  zookeeper
+  ports:
+    -  "2181:2181"
+  environment:
+    -  ALLOW_ANONYMOUS_LOGIN=yes
 ```
 Cabe destacar que, para fines demostrativos del ejercicio, se omite autenticación mediante `ALLOW_ANONYMOUS_LOGIN=yes`.
 
@@ -181,18 +181,18 @@ Cabe destacar que, para fines demostrativos del ejercicio, se omite autenticaci�
 El contenedor de Kafka se configura de la siguiente manera en `docker-compose.yml`:
 ```yaml
 kafka:
-	image:  bitnami/kafka:latest
-	container_name:  kafka
-	ports:
-		-  "9092:9092"
-	environment:
-		KAFKA_ZOOKEEPER_CONNECT:  zookeeper:2181
-		KAFKA_ADVERTISED_LISTENERS:  PLAINTEXT://kafka:9092
-		KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:  1
-	volumes:
-		-  /var/run/docker.sock:/var/run/docker.sock
-	depends_on:
-		-  zookeeper
+  image:  bitnami/kafka:latest
+  container_name:  kafka
+  ports:
+    -  "9092:9092"
+  environment:
+    KAFKA_ZOOKEEPER_CONNECT:  zookeeper:2181
+    KAFKA_ADVERTISED_LISTENERS:  PLAINTEXT://kafka:9092
+    KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:  1
+  volumes:
+    -  /var/run/docker.sock:/var/run/docker.sock
+  depends_on:
+    -  zookeeper
 ```
 Kafka depende de ZooKeeper, por lo que utilizamos `depends_on` para asegurar que ZooKeeper esté listo antes de iniciar.
 
@@ -200,16 +200,16 @@ Kafka depende de ZooKeeper, por lo que utilizamos `depends_on` para asegurar que
 El contenedor de Elasticsearch se configura de la siguiente manera:
 ```yaml
 elasticsearch:
-	image:  docker.elastic.co/elasticsearch/elasticsearch:7.9.2
-	container_name:  elasticsearch
-	environment:
-		-  discovery.type=single-node
-		-  ES_JAVA_OPTS=-Xms512m -Xmx512m
-	volumes:
-		-  elastic_data:/usr/share/elasticsearch/data
-	ports:
-		-  "9200:9200"
-		-  "9300:9300"
+  image:  docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+  container_name:  elasticsearch
+  environment:
+    -  discovery.type=single-node
+    -  ES_JAVA_OPTS=-Xms512m -Xmx512m
+  volumes:
+    -  elastic_data:/usr/share/elasticsearch/data
+  ports:
+    -  "9200:9200"
+    -  "9300:9300"
 ```
 El puerto `9200` se utiliza para la API REST de Elasticsearch, y el puerto `9300` para la comunicación interna entre nodos.
 
@@ -217,14 +217,14 @@ El puerto `9200` se utiliza para la API REST de Elasticsearch, y el puerto `9300
 El contenedor de Kibana se configura de la siguiente manera:
 ```yaml
 kibana:
-	image:  docker.elastic.co/kibana/kibana:7.9.2
-	container_name:  kibana
-	ports:
-		-  "5601:5601"
-	environment:
-		ELASTICSEARCH_URL:  http://elasticsearch:9200
-	depends_on:
-		-  elasticsearch
+  image:  docker.elastic.co/kibana/kibana:7.9.2
+  container_name:  kibana
+  ports:
+    -  "5601:5601"
+  environment:
+    ELASTICSEARCH_URL:  http://elasticsearch:9200
+  depends_on:
+    -  elasticsearch
 ```
 Kibana depende de Elasticsearch, por lo que utilizamos `depends_on` para asegurar que Elasticsearch esté listo antes de iniciar.
 
