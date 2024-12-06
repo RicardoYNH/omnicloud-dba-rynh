@@ -49,7 +49,7 @@ cd  omnicloud-dba-rynh
 ```
 ### 2.  **Desplegar en Docker**
 
-- En el terminal de docker, navegar al directorio del repositorio, y desplegar en entorno con:
+En el terminal de docker, navegar al directorio del repositorio, y desplegar en entorno con:
 ```sh
 docker-compose build --no-cache
 docker-compose up -d
