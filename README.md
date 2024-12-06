@@ -1,8 +1,11 @@
   
 
 # OMNICLOUD Prueba técnica v2
+
 **Prueba Técnica: Docker, ETL y Big Data**
+
 **Perfil: DBA Mid**
+
  **Ricardo Yair Nava Hernández**
 
 La presente documentación detalla el entorno de datos implementado y su manejo, aplicando principios de Docker, Postgre SQL, Mongo DB, ETL Pipelines, Big Data, Python, Linux, Kafka, ElasticSearch, Zookeeper y Kibana; a través de cuatro secciones principales:
